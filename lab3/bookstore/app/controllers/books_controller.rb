@@ -1,25 +1,29 @@
 class BooksController < ApplicationController
-  http_basic_authenticate_with name: "admin", password: "admin$123" 
-  
+  http_basic_authenticate_with name: "admin", password: "admin1234"
+
+
+
   def index
     @books = Book.all
   end
   
   def show
-    @book = Book.find(params[:id])
+    @books = Book.find(params[:id])
   end
 
   def new 
-    @book = Book.new
+    
+    @books = Book.new
+
   end
 
   def create 
-    @book = Book.new(book_params)
+    @books = Book.new(product_params)
     
-    if @book.save
+    if @books.save
       redirect_to @book
     else
-      render :new, status: :unprocessable_entity 
+      @books.errors.full_messages
     end  
   end 
 
@@ -30,7 +34,7 @@ class BooksController < ApplicationController
   def update
     @book = Book.find(params[:id])
     
-    if @book.update(book_params)
+    if @book.update(product_params)
       redirect_to @book
     else
       render :new, status: :unprocessable_entity 
@@ -47,6 +51,6 @@ class BooksController < ApplicationController
 
   private
     def book_params
-      params.require(:book).permit(:name, :description, :price ,:image )
+      params.require(:book).permit(:name, :image, :price, :description,:user_id)
     end
 end

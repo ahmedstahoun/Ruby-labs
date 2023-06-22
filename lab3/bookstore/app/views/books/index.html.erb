@@ -1,32 +1,39 @@
-<div class="container d-flex  justify-content-center">
-<h1>All Books</h1>
-</div>
-<div class="d-flex flex-column justify-content-center">
-<table class="container table">
+<h1>Products</h1>
+
+<%= link_to "New Product", new_product_path,class:"btn btn-primary mb-3" %>
+
+<table class="table">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Author</th>
-      <th>Price</th>
-      <th>Action</th>
+      <th scope="col">#</th>
+      <th scope="col">name</th>
+      <th scope="col">description</th>
+      <th scope="col">price</th>
+      <th scope="col">creator</th>
+      <th scope="col">action</th>
     </tr>
   </thead>
-  <tbody>
-    <% @books.each do |book| %>
+  <tbody class="table-group-divider">
+    <% @products.each do |product| %>
       <tr>
-        <td><%= link_to book.name, book %></td>
-        <td><%= book.description %></td>
-        <td><%= book.price %></td>
+        <th scope="row"><%= product.id %></th>
+        <td><%= product.name %></td>
+        <td><%= product.description %></td>
+        <td><%= product.price %></td>
+        <td><%= link_to product.user.name, user_path(product.user) %></td>
         <td>
-          <%= link_to "Show", book_path(book), class: "btn btn-sm btn-primary" %>
-          <%= link_to "Edit", edit_book_path(book.id), class: "btn btn-sm btn-secondary" %>
-          <%= link_to "Delete", book_path(book.id), data:{turbo_method: :delete, turbo_confirm: "Are you sure?" } , class: "btn btn-sm btn-danger" %>
+        <%= link_to "Show", product_path(product), class:"btn btn-secondary" %>
+        <%= link_to "Edit", edit_product_path(product), class:"btn btn-info" %>
+        <%= link_to "Destroy", product_path(product), class:"btn btn-danger", data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                } %></li>
+
         
         </td>
       </tr>
-    <% end %>
+      <% end %>
   </tbody>
 </table>
 
-<%= link_to "New book", new_book_path ,class:"btn btn-dark m-auto" %>
-</div>
+
